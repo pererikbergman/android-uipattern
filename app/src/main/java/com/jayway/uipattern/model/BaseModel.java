@@ -18,6 +18,7 @@ public class BaseModel {
         if (mOnModelChangeListeners.contains(object)) {
             return false;
         }
+        object.onModelChange();
 
         return mOnModelChangeListeners.add(object);
     }
@@ -32,11 +33,11 @@ public class BaseModel {
 
     protected void notifyChange() {
         for (OnModelChangeListener changeListener : mOnModelChangeListeners) {
-            changeListener.OnModelChangeListener();
+            changeListener.onModelChange();
         }
     }
 
-    public static interface OnModelChangeListener {
-        public void OnModelChangeListener();
+    public interface OnModelChangeListener {
+        void onModelChange();
     }
 }

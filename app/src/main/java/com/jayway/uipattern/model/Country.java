@@ -29,4 +29,30 @@ public class Country {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Country)) return false;
+
+        Country country = (Country) o;
+
+        if (mName != null ? !mName.equals(country.mName) : country.mName != null) return false;
+        return !(mRegion != null ? !mRegion.equals(country.mRegion) : country.mRegion != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mName != null ? mName.hashCode() : 0;
+        result = 31 * result + (mRegion != null ? mRegion.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "mName='" + mName + '\'' +
+                ", mRegion='" + mRegion + '\'' +
+                '}';
+    }
 }

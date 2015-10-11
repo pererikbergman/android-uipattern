@@ -1,32 +1,33 @@
 package com.jayway.uipattern.list;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
+import com.jayway.uipattern.list.util.AdapterAnimator;
+import com.jayway.uipattern.list.util.ViewHolder;
 import com.jayway.uipattern.model.Country;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class ListModel extends RecyclerView.Adapter<ViewHolder> {
 
-    private List<Country> mDataSet;
+    private final AdapterAnimator mAdapterAnimator;
+    private       List<Country>   mDataSet;
 
-    private View.OnLongClickListener mOnLongClickListener;
+    private OnCountryClickListener mOnLongClickListener;
 
-    public CountryAdapter() {
+    public ListModel() {
         mDataSet = new ArrayList<>();
+        mAdapterAnimator = new AdapterAnimator(this);
     }
 
     public List<Country> getDataSet() {
         return mDataSet;
     }
 
-    public CountryAdapter setDataSet(List<Country> dataSet) {
-        mDataSet = dataSet;
-        notifyDataSetChanged();
-
+    public ListModel setDataSet(List<Country> dataSet) {
+        mAdapterAnimator.rearrange(mDataSet, dataSet);
         return this;
     }
 
@@ -45,8 +46,11 @@ public class CountryAdapter extends RecyclerView.Adapter<ViewHolder> {
         holder.bind(mDataSet.get(position), mOnLongClickListener);
     }
 
-    public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
+    public void setOnClickListener(OnCountryClickListener onLongClickListener) {
         mOnLongClickListener = onLongClickListener;
     }
 
+    public interface OnCountryClickListener {
+        void onCountryClick(Country position);
+    }
 }

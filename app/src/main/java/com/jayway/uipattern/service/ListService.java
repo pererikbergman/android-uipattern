@@ -10,7 +10,8 @@ import java.util.List;
  */
 public class ListService {
 
-    private List<Country> mDataSet;
+    private static ListService   sListService;
+    private        List<Country> mDataSet;
 
     public ListService() {
         mDataSet = new ArrayList<>();
@@ -53,11 +54,18 @@ public class ListService {
     }
 
     public List<Country> getAll() {
-        return mDataSet;
+        return new ArrayList<>(mDataSet);
     }
 
     public static ListService getService() {
-        return new ListService();
+        if (sListService == null) {
+            sListService = new ListService();
+        }
+
+        return sListService;
     }
 
+    public void delete(Country country) {
+        mDataSet.remove(country);
+    }
 }

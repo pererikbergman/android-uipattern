@@ -10,4 +10,4 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
     android:scrollbars="vertical"
-    tools:context="com.jayway.uipattern.list.CountriesActivity"/>
+    tools:context="com.jayway.uipattern.list.ListActivity"/>
