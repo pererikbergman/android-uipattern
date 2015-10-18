@@ -11,12 +11,16 @@ import com.jayway.uipattern.R;
 import com.jayway.uipattern.model.Country;
 import com.jayway.uipattern.service.ListService;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ListPresenter.ListView {
 
     private RecyclerView               mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private ListModel      mListModel;
+    private OnViewListener mViewListener;
+
+    private ListModel              mListModel;
+    private ListPresenter.ListView mListView;
+    private ListPresenter          mListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +31,20 @@ public class ListActivity extends AppCompatActivity {
         mListModel = new ListModel().setDataSet(ListService.getService().getAll());
 
         // Setting up the view.
+        mListView = this;
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // Setting up the controller.
+        mListPresenter = new ListPresenter(mListModel, mListView);
 
         // Setting up the interaction to the controller.
         mListModel.setOnClickListener(new ListModel.OnCountryClickListener() {
             @Override
             public void onCountryClick(Country country) {
-
+                mViewListener.onDelete(country);
             }
         });
 
@@ -48,15 +54,28 @@ public class ListActivity extends AppCompatActivity {
 
      /* ListView */
 
+    public void setOnViewListener(OnViewListener viewListener) {
+        mViewListener = viewListener;
+    }
+
+    @Override
     public void showUndoDelete(final Country country) {
         Snackbar.make(mRecyclerView, "Delete: " + country.getName(), Snackbar.LENGTH_LONG)
                 .setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // Undo delete
+                                mViewListener.undoDelete(country);
                             }
                         }
                 ).show();
+    }
+
+     /* Listener Interface */
+
+    public interface OnViewListener {
+        void onDelete(Country country);
+
+        void undoDelete(Country country);
     }
 
 }
