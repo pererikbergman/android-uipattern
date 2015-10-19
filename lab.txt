@@ -1,0 +1,21 @@
+Lab 1: MVC
+
+Login Screen
+- If the user press the login button with the right credentials, start the ListActivity.
+- If the user press the login button with the wrong credentials, show error message. Use TextInputLayout#setError(CharSequence error)
+- If the user press the clear button the username and password field should be cleared.
+
+List Screen
+- If the user long press on a list item, the item should be deleted with an undo-snackbar.
+- If the user press undo on the snackbar the item should reappear.
+
+Lab 2: MCP
+Login Screen
+- If the user press the login button with the right credentials, start the ListActivity.
+- If the user press the login button with the wrong credentials, show error message. Use TextInputLayout#setError(CharSequence error)
+- If the user press the clear button the username and password field should be cleared.
+
+List Screen
+- If the user long press on a list item, the item should be deleted with an undo-snackbar.
+- If the user press undo on the snackbar the item should reappear.
+
